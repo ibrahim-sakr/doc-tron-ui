@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/dashboard">
+      <img src="https://getbootstrap.com/docs/4.5/assets/brand/bootstrap-solid.svg" width="30" height="30"
+           class="d-inline-block align-top" alt="" loading="lazy">
+      {{ title }}
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbarContent"
+            aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNavbarContent">
+      <div class="navbar-nav">
+        <a routerLink="/dashboard" class="nav-item nav-link active">
+          Dashboard <span class="sr-only">(current)</span>
+        </a>
+        <a routerLink="/jobs" class="nav-item nav-link">Jobs</a>
+        <a routerLink="/jobs/123/logs" class="nav-item nav-link">Job Logs</a>
+        <a routerLink="/logs/123" class="nav-item nav-link">Log Details</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+<app-loader></app-loader>
+
+<div class="navbar navbar-dark bg-dark footer">
+  <div class="container">
+    <span>time now: 12:50:04 AM</span>
+  </div>
+</div>
