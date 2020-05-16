@@ -10,9 +10,10 @@ import {LogDetailsComponent} from './components/log-details/log-details.componen
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { LoaderComponent } from './components/loader/loader.component';
-import { LoaderService } from './services/loader.service';
-import { LoaderInterceptorService } from './interceptors/loader.interceptor.service';
+import {LoaderComponent} from './components/loader/loader.component';
+import {LoaderService} from './services/loader.service';
+import {LoaderInterceptorService} from './interceptors/loader.interceptor.service';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -29,11 +30,12 @@ import { LoaderInterceptorService } from './interceptors/loader.interceptor.serv
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgSelectModule
   ],
   providers: [
     LoaderService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true }
+    {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true}
   ],
   bootstrap: [AppComponent]
 })

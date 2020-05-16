@@ -1,21 +1,26 @@
-/* my-loader.component.css */
-.loading-spinner{
-  background-color: #0000001f;
-  position: absolute;
-  width: 100%;
-  top: 0px;
-  left: 0px;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  display: grid;
+.loader {
+  position: fixed;
+  background: #212529;
+  bottom: 50px;
+  left: 15px;
+  border-radius: 3px;
+  padding: 12px 15px;
+  color: #ffffff;
 }
-
-.loading-spinner img{
-  align-self: end;
+.loading-text {
+  vertical-align: super;
+  margin: 0 0 0 15px;
+  color: #d2d7dc;
 }
-
-.loading-message{
+.loading-close {
+  display: inline-block;
+  vertical-align: super;
+  margin: 0 0 0 20px;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  cursor: pointer;
+  background: #2f333a;
   text-align: center;
-  align-self: start;
+  border-radius: 3px;
 }

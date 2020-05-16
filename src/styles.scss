@@ -3,6 +3,7 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 @import '~sweetalert2/src/sweetalert2.scss';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 html {
   min-width: 1140px;
@@ -155,12 +156,4 @@ svg.page-nav-icon {
 .content {
   margin-left: 300px;
   overflow: scroll;
-}
-
-.search-box .spinner-border {
-  margin: 8px 10px 0 0;
-}
-
-.search-box input {
-  border-radius: 0.2rem !important;
 }

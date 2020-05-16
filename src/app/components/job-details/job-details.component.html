@@ -9,7 +9,7 @@
     <div class="col-12">
       <div class="card p-4">
         <div>
-          <button type="button" class="btn btn-primary mr-2">
+          <button type="button" class="btn btn-primary mr-2" (click)="update()">
             <!-- Edit Icon -->
             <svg *ngIf="id" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               <path
@@ -43,7 +43,7 @@
 
       <div class="card">
         <div class="card-header border-bottom">
-          <h5>Job #123</h5>
+          <h5>{{ id ? 'Job #'+id : 'New Job' }}</h5>
         </div>
         <div class="p-4">
           <div class="form-group row">

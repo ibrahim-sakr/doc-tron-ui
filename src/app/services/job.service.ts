@@ -22,30 +22,21 @@ export class JobService {
     const url = `${this.url}/${id}`;
     return this.http.get<Job>(url).pipe(
       tap(_ => console.log(`fetched job id=${id}`)),
-      catchError(this.handleError<Job>(`getJob id=${id}`))
+      catchError(this.handleError<Job>(`find id=${id}`))
     );
   }
 
   all(params: { status?: string, search?: string }): Observable<Job[]> {
     return this.http.get<Job[]>(this.url, {params}).pipe(
       tap(_ => console.log('fetched jobs')),
-      catchError(this.handleError<Job[]>('getJobs', []))
+      catchError(this.handleError<Job[]>('all', []))
     );
   }
 
-  update(id: number, body: Job): Observable<any> {
-    const url = `${this.url}/${id}`;
-
-    return this.http.put(url, body, this.httpOptions).pipe(
-      tap(_ => console.log(`updated hero id=${id}`)),
-      catchError(this.handleError<any>('updateJob'))
-    );
-  }
-
-  create(job: Job): Observable<Job> {
+  update(job: Job): Observable<any> {
     return this.http.post<Job>(this.url, job, this.httpOptions).pipe(
-      tap((newJob: Job) => console.log(`added hero w/ id=${newJob.id}`)),
-      catchError(this.handleError<Job>('create'))
+      tap((updatedJob: Job) => console.log(`updated job => id=${updatedJob.id}`)),
+      catchError(this.handleError<Job>('update'))
     );
   }
 
@@ -55,6 +46,14 @@ export class JobService {
     return this.http.delete<Job>(url, this.httpOptions).pipe(
       tap(_ => console.log(`deleted job id=${id}`)),
       catchError(this.handleError<any>('delete'))
+    );
+  }
+
+  dequeue(id: number): Observable<any> {
+    const url = `${this.url}/${id}/dequeue`;
+    return this.http.get(url).pipe(
+      tap(_ => console.log('job dequeue')),
+      catchError(this.handleError<any>('all'))
     );
   }
 

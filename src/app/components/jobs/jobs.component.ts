@@ -11,11 +11,9 @@ import {Subscription} from 'rxjs/internal/Subscription';
   styleUrls: ['./jobs.component.scss']
 })
 export class JobsComponent implements OnInit, OnDestroy {
-  loading = false;
   searchQuery: string = this.route.snapshot.queryParamMap.get('search');
   jobs: Job[] = [];
-  queryParamsObserver: Subscription;
-  allJobsObserver: Subscription;
+  observers: Subscription[] = [];
   delaySearch: any;
   currentPage = 'all';
 
@@ -31,16 +29,17 @@ export class JobsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.queryParamsObserver.unsubscribe();
-    this.allJobsObserver.unsubscribe();
+    this.observers.forEach((observer) => {
+      observer.unsubscribe();
+    });
   }
 
   watchQueryParams() {
-    this.queryParamsObserver = this.route.queryParams.subscribe(params => {
+    this.observers.push(this.route.queryParams.subscribe(params => {
       this.currentPage = params.status || 'all';
       this.searchQuery = params.search;
       this.getJobs(params);
-    });
+    }));
   }
 
   search(query: string) {
@@ -61,32 +60,54 @@ export class JobsComponent implements OnInit, OnDestroy {
   }
 
   getJobs(options: { status?: string, search?: string }): void {
-    this.allJobsObserver = this.jobService.all(options).subscribe(jobs => {
+    this.observers.push(this.jobService.all(options).subscribe(jobs => {
       this.jobs = jobs;
-    });
+    }));
   }
 
   dequeue(job: Job) {
-    console.log(job);
     Swal.fire({
-      text: 'Hello!',
-      icon: 'success'
+      title: 'Run Job',
+      showCancelButton: true,
+      html: 'run job now!'
+    }).then(result => {
+      if (result.dismiss) {
+        return;
+      }
+
+      this.jobService.dequeue(job.id);
     });
   }
 
   pause(job: Job) {
-    console.log(job);
     Swal.fire({
-      text: 'Hello!',
-      icon: 'success'
+      title: 'Pause Job',
+      showCancelButton: true,
+      html: 'Are you Sure!'
+    }).then(result => {
+      if (result.dismiss) {
+        return;
+      }
+
+      this.observers.push(this.jobService.update(job).subscribe(updatedJob => {
+        job = updatedJob;
+      }));
     });
   }
 
   delete(job: Job) {
-    console.log(job);
     Swal.fire({
-      text: 'Hello!',
-      icon: 'success'
+      title: 'Deleting Job',
+      showCancelButton: true,
+      html: 'you are about to delete a job, it\'s undone operation.<br>Are you Sure!'
+    }).then(result => {
+      if (result.dismiss) {
+        return;
+      }
+
+      this.observers.push(this.jobService.delete(job.id).subscribe(() => {
+        this.getJobs(this.route.snapshot.queryParams);
+      }));
     });
   }
 }
