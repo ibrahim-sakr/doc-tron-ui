@@ -1,7 +1,7 @@
 export interface Worker {
   type: string;
   url?: string;
-  args?: {[key: string]: any};
+  body?: string;
   host?: string;
   port?: string;
   username?: string;

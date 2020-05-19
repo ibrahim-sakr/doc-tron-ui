@@ -98,7 +98,7 @@
           <div *ngIf="job.worker.type === 'http'" class="form-group row">
             <label for="worker-body" class="col-sm-2 col-form-label">Body</label>
             <div class="col-sm-10">
-              <textarea rows="3" class="form-control" id="worker-body" [(ngModel)]="job.worker.args"
+              <textarea rows="3" class="form-control" id="worker-body" [(ngModel)]="job.worker.body"
                         placeholder="json object represent the body that will send with the request"></textarea>
             </div>
           </div>
