@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {LogService} from '../../services/log.service';
 import {Job} from '../../interfaces/Job';
+import {JobService} from '../../services/job.service';
 
 @Component({
   selector: 'app-logs',
@@ -22,11 +23,14 @@ export class LogsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private logService: LogService) {
+    private logService: LogService,
+    private jobService: JobService
+  ) {
   }
 
   ngOnInit(): void {
     this.watchQueryParams();
+    this.getJobs();
   }
 
   ngOnDestroy(): void {
@@ -43,7 +47,15 @@ export class LogsComponent implements OnInit, OnDestroy {
     }));
   }
 
-  search(query: string) {
+  getJobs() {
+    this.observers.push(
+      this.jobService.all({}).subscribe(jobs => {
+        this.jobs = jobs;
+      })
+    );
+  }
+
+  search(query: number[]) {
     // delete old timeout
     clearTimeout(this.delaySearch);
 
@@ -54,11 +66,15 @@ export class LogsComponent implements OnInit, OnDestroy {
         {
           relativeTo: this.route,
           queryParams: {
-            search: query.length > 2 ? query : null
+            jobs: query
           },
           queryParamsHandling: 'merge'
         });
-    }, 600);
+    }, 1000);
+  }
+
+  jobSelected() {
+    this.search(this.selectedJobIds);
   }
 
   getLogs(options: { status?: string, search?: string }): void {

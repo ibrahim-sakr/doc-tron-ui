@@ -1,4 +1,5 @@
 import {Worker} from './Worker';
+import {Log} from './Log';
 
 export interface Job {
   id?: number;
@@ -9,6 +10,7 @@ export interface Job {
   scheduled: string;
   next_run?: Date;
   worker: Worker;
+  logs?: Log[];
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;

@@ -60,9 +60,11 @@ export class JobsComponent implements OnInit, OnDestroy {
   }
 
   getJobs(options: { status?: string, search?: string }): void {
-    this.observers.push(this.jobService.all(options).subscribe(jobs => {
-      this.jobs = jobs;
-    }));
+    this.observers.push(
+      this.jobService.all(options).subscribe(jobs => {
+        this.jobs = jobs;
+      })
+    );
   }
 
   dequeue(job: Job) {
@@ -79,7 +81,7 @@ export class JobsComponent implements OnInit, OnDestroy {
     });
   }
 
-  pause(job: Job) {
+  queue(job: Job, status: number) {
     Swal.fire({
       title: 'Pause Job',
       showCancelButton: true,
@@ -89,8 +91,9 @@ export class JobsComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.observers.push(this.jobService.update(job).subscribe(updatedJob => {
-        job = updatedJob;
+      this.observers.push(this.jobService.queued(job.id, status as unknown as string).subscribe(updatedJob => {
+        // @ts-ignore
+        job.queued = status;
       }));
     });
   }

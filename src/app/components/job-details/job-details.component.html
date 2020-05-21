@@ -6,22 +6,22 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-12">
+    <form class="col-12" [formGroup]="jobForm" (ngSubmit)="update()">
       <div class="card p-4">
         <div>
-          <button type="button" class="btn btn-primary mr-2" (click)="update()">
+          <button type="submit" class="btn btn-primary mr-2" [disabled]="!jobForm.valid">
             <!-- Edit Icon -->
-            <svg *ngIf="id" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+            <svg *ngIf="jobForm.get('id').value" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               <path
                 d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"></path>
             </svg>
             <!-- Add Icon -->
-            <svg *ngIf="!id" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <svg *ngIf="!jobForm.get('id').value" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
               <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
             </svg>
-            {{id ? 'Update' : 'Create'}}
+            {{jobForm.get('id').value ? 'Update' : 'Create'}}
           </button>
-          <button *ngIf="id" type="button" class="btn btn-danger" (click)="delete()">
+          <button *ngIf="jobForm.get('id').value" type="button" class="btn btn-danger" (click)="delete()">
             <!-- Delete Icon -->
             <svg class="action-icon last-child" xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 448 512">
@@ -30,7 +30,7 @@
             </svg>
             Delete
           </button>
-          <button *ngIf="id" type="button" class="btn btn-success float-right" (click)="dequeue()">
+          <button *ngIf="jobForm.get('id').value" type="button" class="btn btn-success float-right" (click)="dequeue()">
             <!-- Run Icon -->
             <svg class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
               <path
@@ -43,38 +43,38 @@
 
       <div class="card">
         <div class="card-header border-bottom">
-          <h5>{{ id ? 'Job #'+id : 'New Job' }}</h5>
+          <h5>{{ jobForm.get('id').value ? 'Job #' + jobForm.get('id').value : 'New Job' }}</h5>
         </div>
         <div class="p-4">
           <div class="form-group row">
             <label for="job-name" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="job-name" placeholder="job name" [(ngModel)]="job.name">
+              <input type="text" class="form-control" id="job-name" placeholder="job name" formControlName="name">
             </div>
           </div>
           <div class="form-group row">
             <label for="job-description" class="col-sm-2 col-form-label">Description</label>
             <div class="col-sm-10">
-              <textarea rows="3" class="form-control" id="job-description" [(ngModel)]="job.description"></textarea>
+              <textarea rows="3" class="form-control" id="job-description" formControlName="description"></textarea>
             </div>
           </div>
           <div class="form-group row">
             <label for="job-scheduled" class="col-sm-2 col-form-label">Scheduled</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="job-scheduled" placeholder="when the job will run"
-                     [(ngModel)]="job.scheduled">
+                     formControlName="scheduled">
             </div>
           </div>
           <div class="form-check row">
             <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="job-queued" [(ngModel)]="job.queued">
+              <input type="checkbox" class="custom-control-input" id="job-queued" formControlName="queued">
               <label class="custom-control-label" for="job-queued">Run Job Automatically</label>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" formGroupName="worker">
         <div class="card-header border-bottom">
           <h5>Worker Configs</h5>
         </div>
@@ -82,77 +82,77 @@
           <div class="form-group row">
             <label for="worker-type" class="col-sm-2 col-form-label">Type</label>
             <div class="col-sm-10">
-              <select class="form-control" id="worker-type" [(ngModel)]="job.worker.type">
+              <select class="form-control" id="worker-type" formControlName="type">
                 <option value="http">HTTP</option>
                 <option value="ssh">SSH</option>
               </select>
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'http'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'http'" class="form-group row">
             <label for="worker-url" class="col-sm-2 col-form-label">Url</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-url" placeholder="url that will trigger the job"
-                     [(ngModel)]="job.worker.url">
+                     formControlName="url">
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'http'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'http'" class="form-group row">
             <label for="worker-body" class="col-sm-2 col-form-label">Body</label>
             <div class="col-sm-10">
-              <textarea rows="3" class="form-control" id="worker-body" [(ngModel)]="job.worker.body"
+              <textarea rows="3" class="form-control" id="worker-body" formControlName="body"
                         placeholder="json object represent the body that will send with the request"></textarea>
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'ssh'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
             <label for="worker-host" class="col-sm-2 col-form-label">Host</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-host" placeholder="ssh host"
-                     [(ngModel)]="job.worker.host">
+                     formControlName="host">
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'ssh'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
             <label for="worker-port" class="col-sm-2 col-form-label">Port</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-port" placeholder="ssh port"
-                     [(ngModel)]="job.worker.port">
+                     formControlName="port">
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'ssh'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
             <label for="worker-username" class="col-sm-2 col-form-label">Username</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-username" placeholder="ssh username"
-                     [(ngModel)]="job.worker.username">
+                     formControlName="username">
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'ssh'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
             <label for="worker-password" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-password" placeholder="ssh password"
-                     [(ngModel)]="job.worker.password">
+                     formControlName="password">
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'ssh'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
             <label for="worker-command" class="col-sm-2 col-form-label">Command</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-command" placeholder="command"
-                     [(ngModel)]="job.worker.command">
+                     formControlName="command">
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'ssh'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
             <label for="worker-privatekey" class="col-sm-2 col-form-label">Private Key</label>
             <div class="col-sm-10">
-              <textarea rows="3" class="form-control" id="worker-privatekey" [(ngModel)]="job.worker.privateKey"
+              <textarea rows="3" class="form-control" id="worker-privatekey" formControlName="privateKey"
                         placeholder="ssh private key that will use for auth"></textarea>
             </div>
           </div>
-          <div *ngIf="job.worker.type === 'ssh'" class="form-group row">
+          <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
             <label for="worker-passphrase" class="col-sm-2 col-form-label">Passphrase</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-passphrase" placeholder="ssh key phrase"
-                     [(ngModel)]="job.worker.passphrase">
+                     formControlName="passphrase">
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>

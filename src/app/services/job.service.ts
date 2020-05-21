@@ -53,7 +53,17 @@ export class JobService {
     const url = `${this.url}/${id}/dequeue`;
     return this.http.get(url).pipe(
       tap(_ => console.log('job dequeue')),
-      catchError(this.handleError<any>('all'))
+      catchError(this.handleError<any>('dequeue'))
+    );
+  }
+
+  queued(id: number, status: string): Observable<any> {
+    const url = `${this.url}/${id}/queued`;
+    return this.http.get(url, {
+      params: { status }
+    }).pipe(
+      tap(_ => console.log('job paused')),
+      catchError(this.handleError<any>('pause'))
     );
   }
 

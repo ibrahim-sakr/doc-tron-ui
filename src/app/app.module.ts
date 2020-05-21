@@ -14,6 +14,8 @@ import {LoaderComponent} from './components/loader/loader.component';
 import {LoaderService} from './services/loader.service';
 import {LoaderInterceptorService} from './interceptors/loader.interceptor.service';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {ReactiveFormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgSelectModule
+    NgSelectModule,
+    ReactiveFormsModule
   ],
   providers: [
     LoaderService,
