@@ -3,13 +3,13 @@ import {Log} from './Log';
 
 export interface Job {
   id?: number;
-  name: string;
+  name?: string;
   description?: string;
   in_progress?: boolean;
-  queued: boolean;
-  scheduled: string;
+  queued?: boolean;
+  scheduled?: string;
   next_run?: Date;
-  worker: Worker;
+  worker?: Worker;
   logs?: Log[];
   created_at?: Date;
   updated_at?: Date;

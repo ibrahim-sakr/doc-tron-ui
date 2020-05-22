@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs/internal/Subscription';
 })
 export class JobsComponent implements OnInit, OnDestroy {
   searchQuery: string = this.route.snapshot.queryParamMap.get('search');
-  jobs: Job[] = [];
+  jobs: any[] = [];
   observers: Subscription[] = [];
   delaySearch: any;
   currentPage = 'all';
@@ -67,7 +67,7 @@ export class JobsComponent implements OnInit, OnDestroy {
     );
   }
 
-  dequeue(job: Job) {
+  dequeue(job: any) {
     Swal.fire({
       title: 'Run Job',
       showCancelButton: true,
@@ -77,11 +77,11 @@ export class JobsComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.jobService.dequeue(job.id);
+      this.jobService.dequeue(job.job_id);
     });
   }
 
-  queue(job: Job, status: number) {
+  queue(job: any, status: number) {
     Swal.fire({
       title: 'Pause Job',
       showCancelButton: true,
@@ -91,14 +91,14 @@ export class JobsComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.observers.push(this.jobService.queued(job.id, status as unknown as string).subscribe(updatedJob => {
+      this.observers.push(this.jobService.queued(job.job_id, status as unknown as string).subscribe(updatedJob => {
         // @ts-ignore
         job.queued = status;
       }));
     });
   }
 
-  delete(job: Job) {
+  delete(job: any) {
     Swal.fire({
       title: 'Deleting Job',
       showCancelButton: true,
@@ -108,7 +108,7 @@ export class JobsComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.observers.push(this.jobService.delete(job.id).subscribe(() => {
+      this.observers.push(this.jobService.delete(job.job_id).subscribe(() => {
         this.getJobs(this.route.snapshot.queryParams);
       }));
     });

@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {LogService} from '../../services/log.service';
 import {Log} from '../../interfaces/Log';
 import {ActivatedRoute} from '@angular/router';
+import {TabsetComponent} from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'app-log-details',
@@ -10,8 +11,20 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./log-details.component.scss']
 })
 export class LogDetailsComponent implements OnInit, OnDestroy {
+  @ViewChild('staticTabs', { static: false }) staticTabs: TabsetComponent;
   observers: Subscription[] = [];
-  log: Log;
+  log: Log = {
+    id: 0,
+    status: '',
+    output: '',
+    error: '',
+    job: {
+      id: 0,
+      name: ''
+    },
+    started_at: new Date(),
+    finished_at: new Date()
+  };
 
   constructor(private logService: LogService, private route: ActivatedRoute) {
   }
@@ -34,6 +47,10 @@ export class LogDetailsComponent implements OnInit, OnDestroy {
         this.log = log;
       })
     );
+  }
+
+  selectTab(tabId: number) {
+    this.staticTabs.tabs[tabId].active = true;
   }
 
 }

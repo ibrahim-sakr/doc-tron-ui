@@ -15,7 +15,7 @@ import {LoaderService} from './services/loader.service';
 import {LoaderInterceptorService} from './interceptors/loader.interceptor.service';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     LoaderComponent,
   ],
   imports: [
+    TabsModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,

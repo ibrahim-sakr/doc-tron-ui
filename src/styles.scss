@@ -142,14 +142,30 @@ svg.page-nav-icon {
   margin-bottom: 20px;
 }
 
-.nav {
-  width: 300px;
-  position: absolute;
-  bottom: 0;
-  top: 132px;
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+  border-color: #ffffff;
+}
+
+.card .nav-link {
+  font-size: .9rem;
+  border-radius: 0;
+  padding: .75rem 1.25rem;
+  color: #212529;
+}
+
+.card .nav-link.active {
+  background: none;
+  color: #4040c8;
+  border-bottom: 2px solid #4040c8;
 }
 
 .content {
   margin-left: 300px;
   overflow: scroll;
+}
+
+.alert {
+  margin-bottom: 0;
+  margin-top: 15px;
 }

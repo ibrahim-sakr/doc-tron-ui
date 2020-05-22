@@ -11,13 +11,16 @@
         <div>
           <button type="submit" class="btn btn-primary mr-2" [disabled]="!jobForm.valid">
             <!-- Edit Icon -->
-            <svg *ngIf="jobForm.get('id').value" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+            <svg *ngIf="jobForm.get('id').value" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 576 512">
               <path
                 d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"></path>
             </svg>
             <!-- Add Icon -->
-            <svg *ngIf="!jobForm.get('id').value" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-              <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+            <svg *ngIf="!jobForm.get('id').value" class="action-icon last-child" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 448 512">
+              <path
+                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
             </svg>
             {{jobForm.get('id').value ? 'Update' : 'Create'}}
           </button>
@@ -50,6 +53,12 @@
             <label for="job-name" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="job-name" placeholder="job name" formControlName="name">
+              <div *ngIf="jobForm.get('name').invalid && (jobForm.get('name').dirty || jobForm.get('name').touched)"
+                   class="alert alert-danger">
+                <div *ngIf="jobForm.get('name').errors.required">
+                  Name is required.
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group row">
@@ -63,6 +72,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="job-scheduled" placeholder="when the job will run"
                      formControlName="scheduled">
+              <div
+                *ngIf="jobForm.get('scheduled').invalid && (jobForm.get('scheduled').dirty || jobForm.get('scheduled').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('scheduled').errors.required">
+                  Scheduled is required.
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-check row">
@@ -86,6 +102,13 @@
                 <option value="http">HTTP</option>
                 <option value="ssh">SSH</option>
               </select>
+              <div
+                *ngIf="jobForm.get('worker.type').invalid && (jobForm.get('worker.type').dirty || jobForm.get('worker.type').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.type').errors.required">
+                  Worker Type is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'http'" class="form-group row">
@@ -93,6 +116,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-url" placeholder="url that will trigger the job"
                      formControlName="url">
+              <div
+                *ngIf="jobForm.get('worker.url').invalid && (jobForm.get('worker.url').dirty || jobForm.get('worker.url').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.url').errors.required">
+                  URL is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'http'" class="form-group row">
@@ -100,6 +130,13 @@
             <div class="col-sm-10">
               <textarea rows="3" class="form-control" id="worker-body" formControlName="body"
                         placeholder="json object represent the body that will send with the request"></textarea>
+              <div
+                *ngIf="jobForm.get('worker.body').invalid && (jobForm.get('worker.body').dirty || jobForm.get('worker.body').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.body').errors.required">
+                  Body is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
@@ -107,6 +144,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-host" placeholder="ssh host"
                      formControlName="host">
+              <div
+                *ngIf="jobForm.get('worker.host').invalid && (jobForm.get('worker.host').dirty || jobForm.get('worker.host').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.host').errors.required">
+                  Host is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
@@ -114,6 +158,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-port" placeholder="ssh port"
                      formControlName="port">
+              <div
+                *ngIf="jobForm.get('worker.port').invalid && (jobForm.get('worker.port').dirty || jobForm.get('worker.port').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.port').errors.required">
+                  Port is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
@@ -121,6 +172,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-username" placeholder="ssh username"
                      formControlName="username">
+              <div
+                *ngIf="jobForm.get('worker.username').invalid && (jobForm.get('worker.username').dirty || jobForm.get('worker.username').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.username').errors.required">
+                  Username is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
@@ -128,6 +186,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-password" placeholder="ssh password"
                      formControlName="password">
+              <div
+                *ngIf="jobForm.get('worker.password').invalid && (jobForm.get('worker.password').dirty || jobForm.get('worker.password').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.password').errors.required">
+                  Password is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
@@ -135,6 +200,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-command" placeholder="command"
                      formControlName="command">
+              <div
+                *ngIf="jobForm.get('worker.command').invalid && (jobForm.get('worker.command').dirty || jobForm.get('worker.command').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.command').errors.required">
+                  Command is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
@@ -142,6 +214,13 @@
             <div class="col-sm-10">
               <textarea rows="3" class="form-control" id="worker-privatekey" formControlName="privateKey"
                         placeholder="ssh private key that will use for auth"></textarea>
+              <div
+                *ngIf="jobForm.get('worker.privateKey').invalid && (jobForm.get('worker.privateKey').dirty || jobForm.get('worker.privateKey').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.privateKey').errors.required">
+                  Private Key is required.
+                </div>
+              </div>
             </div>
           </div>
           <div *ngIf="jobForm.get('worker.type').value === 'ssh'" class="form-group row">
@@ -149,6 +228,13 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="worker-passphrase" placeholder="ssh key phrase"
                      formControlName="passphrase">
+              <div
+                *ngIf="jobForm.get('worker.passphrase').invalid && (jobForm.get('worker.passphrase').dirty || jobForm.get('worker.passphrase').touched)"
+                class="alert alert-danger">
+                <div *ngIf="jobForm.get('worker.passphrase').errors.required">
+                  Passphrase is required.
+                </div>
+              </div>
             </div>
           </div>
         </div>
