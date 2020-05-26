@@ -21,3 +21,8 @@ from here you can
 - run `npm install -g @angular/cli`
 - run `npm install`
 - run `ng serve`
+
+### Docker
+
+- docker build -t doc-tron-ui .
+- docker run --name doc-tron-ui -d -p 8888:80 doc-tron-ui
