@@ -14,7 +14,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     {
       number: 0,
       title: 'total jobs',
-      color: 'text-primary'
+      color: 'text-primary',
+      link: '/jobs'
     },
     {
       number: 0,

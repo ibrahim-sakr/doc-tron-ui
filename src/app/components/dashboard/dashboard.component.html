@@ -9,8 +9,10 @@
     <div class="col-3 dashboard-card" *ngFor="let total of totals">
       <div class="card">
         <div class="card-header">
-          <h4 class="w-100 text-center font-weight-bold" [ngClass]="total.color">{{ total.number }}</h4>
-          <span class="d-block w-100 text-center" [ngClass]="total.color">{{ total.title }}</span>
+          <a routerLink="{{total.link}}">
+            <h4 class="w-100 text-center font-weight-bold" [ngClass]="total.color">{{ total.number }}</h4>
+            <span class="d-block w-100 text-center" [ngClass]="total.color">{{ total.title }}</span>
+          </a>
         </div>
       </div>
     </div>

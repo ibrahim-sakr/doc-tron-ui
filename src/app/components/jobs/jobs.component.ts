@@ -36,7 +36,10 @@ export class JobsComponent implements OnInit, OnDestroy {
 
   watchQueryParams() {
     this.observers.push(this.route.queryParams.subscribe(params => {
-      this.currentPage = params.status || 'all';
+      this.currentPage = params.in_progress === undefined ?
+        'all' : params.in_progress === '1' ?
+          'in_progress_active' : 'in_progress_inactive';
+      console.log(this.currentPage);
       this.searchQuery = params.search;
       this.getJobs(params);
     }));
@@ -93,7 +96,7 @@ export class JobsComponent implements OnInit, OnDestroy {
 
       this.observers.push(this.jobService.queued(job.job_id, status as unknown as string).subscribe(updatedJob => {
         // @ts-ignore
-        job.queued = status;
+        job.job_queued = status;
       }));
     });
   }
